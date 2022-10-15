@@ -17,15 +17,27 @@ struct ContentView: View {
             List {
                 ForEach(data.items) { item in
                     HStack(spacing: 10) {
-                        Label("Mark as done", systemImage: "x.circle")
-                            .labelStyle(.iconOnly)
-                        
                         VStack(alignment: .leading, spacing: 0) {
                             Text(item.title)
                             
                             Text(item.details)
                                 .font(.caption)
                                 .opacity(0.7)
+                        }
+                        
+                        Spacer()
+                        
+                        Button {
+                            var newItem = item
+                            newItem.done.toggle()
+                            
+                            if let index = data.items.firstIndex(of: item) {
+                                data.items[index] = newItem
+                            }
+                        } label: {
+                            Label("Mark as done", systemImage: item.done ? "checkmark.circle.fill" : "x.circle")
+                                .labelStyle(.iconOnly)
+                                .foregroundColor(item.done ? .green : .red)
                         }
                     }
                     .padding(.vertical, 7)
