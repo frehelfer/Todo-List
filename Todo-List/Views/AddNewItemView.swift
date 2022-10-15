@@ -15,18 +15,33 @@ struct AddNewItemView: View {
     @State private var details = ""
     
     var body: some View {
-        Form {
-            TextField("Title", text: $title)
-            
-            TextField("Details", text: $details)
-            
-            Button {
-                if !title.isEmpty {
-                    data.saveNewItem(title: title, details: details)
-                    dismiss()
+        ZStack {
+            VStack(spacing: 0) {
+                HStack {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "x.circle")
+                            .foregroundColor(.blue)
+                            .padding()
+                    }
+                    Spacer()
                 }
-            } label: {
-                Text("save".uppercased())
+                
+                Form {
+                    TextField("Title", text: $title)
+                    
+                    TextField("Details", text: $details)
+                    
+                    Button {
+                        if !title.isEmpty {
+                            data.saveNewItem(title: title, details: details)
+                            dismiss()
+                        }
+                    } label: {
+                        Text("save".uppercased())
+                    }
+                }
             }
         }
     }

@@ -10,56 +10,58 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var data = ItemViewModel()
     
-    @State private var showingAddItemSheet = false
+    @State var showingAddItemSheet = false
     
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(data.items) { item in
-                    HStack(spacing: 10) {
-                        VStack(alignment: .leading, spacing: 0) {
-                            Text(item.title)
-                            
-                            Text(item.details)
-                                .font(.caption)
-                                .opacity(0.7)
-                        }
-                        
-                        Spacer()
-                        
-                        Button {
-                            var newItem = item
-                            newItem.done.toggle()
-                            
-                            if let index = data.items.firstIndex(of: item) {
-                                data.items[index] = newItem
+        ZStack {
+            NavigationView {
+                List {
+                    ForEach(data.items) { item in
+                        HStack(spacing: 10) {
+                            VStack(alignment: .leading, spacing: 0) {
+                                Text(item.title)
+                                
+                                Text(item.details)
+                                    .font(.caption)
+                                    .opacity(0.7)
                             }
-                        } label: {
-                            Label("Mark as done", systemImage: item.done ? "checkmark.circle.fill" : "x.circle")
-                                .labelStyle(.iconOnly)
-                                .foregroundColor(item.done ? .green : .red)
+                            
+                            Spacer()
+                            
+                            Button {
+                                var newItem = item
+                                newItem.done.toggle()
+                                
+                                if let index = data.items.firstIndex(of: item) {
+                                    data.items[index] = newItem
+                                }
+                            } label: {
+                                Label("Mark as done", systemImage: item.done ? "checkmark.circle.fill" : "x.circle")
+                                    .labelStyle(.iconOnly)
+                                    .foregroundColor(item.done ? .green : .red)
+                            }
                         }
+                        .padding(.vertical, 7)
                     }
-                    .padding(.vertical, 7)
+                    .onDelete(perform: data.delete)
+                    .onMove(perform: data.move)
+                    .listRowBackground(Color.gray.opacity(0.1))
                 }
-                .onDelete(perform: data.delete)
-                .onMove(perform: data.move)
-                .listRowBackground(Color.gray.opacity(0.1))
-            }
-            .navigationBarTitle("Todo-List")
-            .sheet(isPresented: $showingAddItemSheet) {
-                AddNewItemView(data: data)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    EditButton()
+                .navigationBarTitle("Todo-List")
+                .sheet(isPresented: $showingAddItemSheet) {
+                    AddNewItemView(data: data)
                 }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showingAddItemSheet = true
-                    } label: {
-                        Label("Add new item", systemImage: "plus")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        EditButton()
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            showingAddItemSheet = true
+                        } label: {
+                            Label("Add new item", systemImage: "plus")
+                        }
                     }
                 }
             }
