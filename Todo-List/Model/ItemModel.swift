@@ -10,7 +10,8 @@ import Foundation
 struct ItemModel: Identifiable, Codable, Equatable {
     var id = UUID()
     var title: String
+    var details: String
     var done = false
     
-    static var example = ItemModel(title: "Caminhar com a Besh")
+    static var example = ItemModel(title: "Caminhar com a Besh", details: "De noite")
 }
