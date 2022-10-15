@@ -8,15 +8,56 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var data = ItemViewModel()
+    
+    @State private var showingAddItemSheet = false
     
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            List {
+                ForEach(data.items) { item in
+                    HStack(spacing: 10) {
+                        Label("Mark as done", systemImage: "x.circle")
+                            .labelStyle(.iconOnly)
+                        
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text(item.title)
+                            
+                            Text(item.details)
+                                .font(.caption)
+                                .opacity(0.7)
+                        }
+                    }
+                    .padding(.vertical, 7)
+                }
+                .onDelete(perform: data.delete)
+                .onMove(perform: data.move)
+                .listRowBackground(Color.gray.opacity(0.1))
+            }
+            .navigationBarTitle("Todo-List")
+            .sheet(isPresented: $showingAddItemSheet) {
+                AddNewItemView(data: data)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    EditButton()
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showingAddItemSheet = true
+                    } label: {
+                        Label("Add new item", systemImage: "plus")
+                    }
+                }
+            }
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .preferredColorScheme(.dark)
     }
 }
