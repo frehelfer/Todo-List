@@ -15,35 +15,47 @@ struct AddNewItemView: View {
     @State private var details = ""
     
     var body: some View {
-        ZStack {
-            VStack(spacing: 0) {
-                HStack {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "x.circle")
-                            .foregroundColor(.blue)
-                            .padding()
-                    }
-                    Spacer()
+        VStack {
+            HStack {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "x.circle")
+                        .foregroundColor(.blue)
+                        .padding(5)
                 }
+                Spacer()
+            }
+            
+            Text("Add New Item")
+                .font(.title.bold())
+            
+            ScrollView {
+                TextField("Title", text: $title)
+                    .padding()
+                    .background(Color.gray.opacity(0.2).cornerRadius(10))
                 
-                Form {
-                    TextField("Title", text: $title)
-                    
-                    TextField("Details", text: $details)
-                    
-                    Button {
-                        if !title.isEmpty {
-                            data.saveNewItem(title: title, details: details)
-                            dismiss()
-                        }
-                    } label: {
-                        Text("save".uppercased())
+                TextField("Details", text: $details)
+                    .padding()
+                    .background(Color.gray.opacity(0.2).cornerRadius(10))
+                
+                Button {
+                    if !title.isEmpty {
+                        data.saveNewItem(title: title, details: details)
+                        dismiss()
                     }
+                } label: {
+                    Text("save".uppercased())
+                        .fontWeight(.medium)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
             }
         }
+        .padding()
     }
 }
 

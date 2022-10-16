@@ -13,5 +13,5 @@ struct ItemModel: Identifiable, Codable, Equatable {
     var details: String
     var done = false
     
-    static var example = ItemModel(title: "Caminhar com a Besh", details: "De noite")
+    static var example = ItemModel(title: "Caminhar com a Besh", details: "Levar Biscoito, ela gosta.")
 }
