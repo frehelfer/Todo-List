@@ -14,10 +14,11 @@ struct ListView: View {
     
     var body: some View {
         NavigationView {
+            
             List {
                 
                 ForEach(data.items) { item in
-                    ListRowView(data: data, item: item)
+                    ListRowView(item: item)
                 }
                 .onDelete(perform: data.deleteItem)
                 .onMove(perform: data.moveItem)
@@ -26,7 +27,7 @@ struct ListView: View {
             }
             .navigationBarTitle("Todo-List")
             .sheet(isPresented: $showingAddItemSheet) {
-                AddNewItemView(data: data)
+                AddNewItemView()
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -42,6 +43,7 @@ struct ListView: View {
                 }
             }
         }
+        .environmentObject(data)
     }
 }
 

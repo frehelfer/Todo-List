@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ListRowView: View {
-    @ObservedObject var data: ItemViewModel
+    @EnvironmentObject var data: ItemViewModel
     var item: ItemModel
     
     var body: some View {
@@ -37,6 +37,6 @@ struct ListRowView: View {
 
 struct ListRowView_Previews: PreviewProvider {
     static var previews: some View {
-        ListRowView(data: ItemViewModel(), item: ItemModel.example)
+        ListRowView(item: ItemModel.example)
     }
 }

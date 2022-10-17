@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddNewItemView: View {
-    @ObservedObject var data: ItemViewModel
+    @EnvironmentObject var data: ItemViewModel
     @Environment(\.dismiss) var dismiss
     
     @State private var title = ""
@@ -61,6 +61,6 @@ struct AddNewItemView: View {
 
 struct AddNewItemView_Previews: PreviewProvider {
     static var previews: some View {
-        AddNewItemView(data: ItemViewModel())
+        AddNewItemView()
     }
 }
