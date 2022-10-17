@@ -48,6 +48,8 @@ struct ListView: View {
                 }
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .ignoresSafeArea()
         .environmentObject(data)
     }
 }

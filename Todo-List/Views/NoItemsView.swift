@@ -24,8 +24,9 @@ struct NoItemsView: View {
                     Text("Add Something")
                         .font(.title3)
                         .foregroundColor(.white)
+                        .frame(height: 50)
                         .frame(maxWidth: .infinity)
-                        .padding()
+//                        .padding()
                         .background(animate ? .red : .blue)
                         .cornerRadius(10)
                 }
@@ -34,9 +35,11 @@ struct NoItemsView: View {
                 .scaleEffect(animate ? 1.1 : 1.0)
                 .offset(y: animate ? -7 : 0)
             }
-            .padding()
+            .frame(maxWidth: 400)
+            .padding(40)
             .onAppear(perform: addAnimation)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     func addAnimation() {
