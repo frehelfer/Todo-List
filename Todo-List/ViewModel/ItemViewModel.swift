@@ -13,13 +13,21 @@ class ItemViewModel: ObservableObject {
     
     @Published var items: [ItemModel] = [ItemModel]() {
         didSet {
-            if let encoded = try? JSONEncoder().encode(items) {
-                UserDefaults.standard.set(encoded, forKey: itemKey)
-            }
+            saveItems()
         }
     }
     
     init() {
+        getItems()
+    }
+     
+    func saveItems() {
+        if let encoded = try? JSONEncoder().encode(items) {
+            UserDefaults.standard.set(encoded, forKey: itemKey)
+        }
+    }
+    
+    func getItems() {
         if let saved = UserDefaults.standard.data(forKey: itemKey) {
             if let decoded = try? JSONDecoder().decode([ItemModel].self, from: saved) {
                 items = decoded
