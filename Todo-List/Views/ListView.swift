@@ -14,16 +14,21 @@ struct ListView: View {
     
     var body: some View {
         NavigationView {
-            
-            List {
-                
-                ForEach(data.items) { item in
-                    ListRowView(item: item)
+            Group {
+                if data.items.isEmpty {
+                    NoItemsView()
+                        .transition(AnyTransition.opacity
+                            .animation(.easeIn))
+                } else {
+                    List {
+                        ForEach(data.items) { item in
+                            ListRowView(item: item)
+                        }
+                        .onDelete(perform: data.deleteItem)
+                        .onMove(perform: data.moveItem)
+                        .listRowBackground(Color.gray.opacity(0.1))
+                    }
                 }
-                .onDelete(perform: data.deleteItem)
-                .onMove(perform: data.moveItem)
-                .listRowBackground(Color.gray.opacity(0.1))
-                
             }
             .navigationBarTitle("Todo-List")
             .sheet(isPresented: $showingAddItemSheet) {
