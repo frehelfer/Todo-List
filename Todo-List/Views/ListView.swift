@@ -19,8 +19,8 @@ struct ListView: View {
                 ForEach(data.items) { item in
                     ListRowView(data: data, item: item)
                 }
-                .onDelete(perform: data.delete)
-                .onMove(perform: data.move)
+                .onDelete(perform: data.deleteItem)
+                .onMove(perform: data.moveItem)
                 .listRowBackground(Color.gray.opacity(0.1))
                 
             }

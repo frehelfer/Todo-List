@@ -30,7 +30,7 @@ class ItemViewModel: ObservableObject {
         items = []
     }
     
-    func saveNewItem(title: String, details: String) {
+    func addItem(title: String, details: String) {
         let trimmedTitle = title.trimmingCharacters(in: .whitespaces)
         
         if !trimmedTitle.isEmpty {
@@ -39,11 +39,20 @@ class ItemViewModel: ObservableObject {
         }
     }
     
-    func delete(indexSet: IndexSet) {
+    func deleteItem(indexSet: IndexSet) {
         items.remove(atOffsets: indexSet)
     }
     
-    func move(indexSet: IndexSet, int: Int) {
+    func moveItem(indexSet: IndexSet, int: Int) {
         items.move(fromOffsets: indexSet, toOffset: int)
+    }
+    
+    func updateItemDoneButton(item: ItemModel) {
+        var updatedItem = item
+        updatedItem.done.toggle()
+        
+        if let index = items.firstIndex(of: item) {
+            items[index] = updatedItem
+        }
     }
 }

@@ -41,7 +41,7 @@ struct AddNewItemView: View {
                 
                 Button {
                     if !title.isEmpty {
-                        data.saveNewItem(title: title, details: details)
+                        data.addItem(title: title, details: details)
                         dismiss()
                     }
                 } label: {

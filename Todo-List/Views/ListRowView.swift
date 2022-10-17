@@ -24,12 +24,7 @@ struct ListRowView: View {
             Spacer()
             
             Button {
-                var newItem = item
-                newItem.done.toggle()
-                
-                if let index = data.items.firstIndex(of: item) {
-                    data.items[index] = newItem
-                }
+                data.updateItemDoneButton(item: item)
             } label: {
                 Label("Mark as done", systemImage: item.done ? "checkmark.circle.fill" : "circle")
                     .labelStyle(.iconOnly)
